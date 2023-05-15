@@ -2,7 +2,7 @@ const { Configuration, OpenAIApi } = require("openai");
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port= 8008
+const port= 80
 app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -31,6 +31,7 @@ app.post('/api/message',  async (req, res)=>{
     model: "gpt-3.5-turbo",
     messages: [...data],
   }).then((response) => {
+    
     res.status(200).json({message: response.data.choices[0].message.content})
   }).catch((error) => {
     res.status(400).json({message:error});
@@ -38,19 +39,5 @@ app.post('/api/message',  async (req, res)=>{
   
   
  })
-// userInterface.on("line", async (input) => {
-//   messageList.push({ role: "user", content: input });
-//   await openai.createChatCompletion({
-//     model: "gpt-3.5-turbo",
-//     messages: [...messageList],
-//   })
-//   .then((res) => {
-//     console.log(res.data.choices[0].message.content);
-//     userInterface.prompt();
-//   })
-//   .catch((e) => {
-//     console.log(e);
-//   });
-// });
 
 app.listen(port);
