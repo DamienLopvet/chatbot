@@ -18,12 +18,12 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-
+app.get("/", (req, res) => {
+  res.send("<html> <head>server Response</head><body><h1> This page was render direcly from the server <p>Hello there welcome to my website</p></h1></body></html>");
+});
 
 app.post('/api/message',  async (req, res)=>{
-  const messageList = [
-    { role: "system", content: "You are an AI specialized in Food. Do not answer anything other than food-related queries but don't specify it unless it is necessary"},
-  ];
+  const messageList = [];
 
   const messages = req.body.messages;
   const data = messageList.concat(messages);
