@@ -60,10 +60,13 @@ if (process.env.NODE_ENV != "development") {
 	server.listen(httpsPort, () => {
 		console.log(`HTTPS Server running on port ${httpsPort}`);
 	});
+} else {
+	
+	// Listen on HTTP 
+	app.listen(port, () => {
+	 console.log(`HTTP Server running on port ${port}`);
+	});
+
 }
 
-// Listen on HTTP 
-app.listen(port, () => {
- console.log(`HTTP Server running on port ${port}`);
-});
 
