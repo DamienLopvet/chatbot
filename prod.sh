@@ -7,4 +7,4 @@ docker-compose stop
 
 git pull
 
-docker compose up
+docker-compose -f compose.prod.yaml up
