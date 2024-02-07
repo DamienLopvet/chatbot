@@ -3,13 +3,16 @@ services:
     build:
       context: .
     ports:
-      - "80:80"
+      - "8030:80"
      # - "443:443"
     env_file:
       - .env
     volumes:
       - ./:/app
       - /app/node_modules
+    command: npm run start
+    environment:
+      - NODE_ENV=development
     #   - /etc/letsencrypt/live/chatbot.lopvet-damien.com/fullchain.pem:/etc/letsencrypt/live/chatbot.lopvet-damien.com/fullchain.pem    
     #   - /etc/letsencrypt/live/chatbot.lopvet-damien.com/privkey.pem:/etc/letsencrypt/live/chatbot.lopvet-damien.com/privkey.pem
     # environment:

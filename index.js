@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import https from "https";
 import fs from "fs";
 import "dotenv/config";
+import { log } from "console";
 
 const app = express();
 
@@ -38,8 +39,12 @@ app.post("/api/message", async (req, res) => {
 		.chat({
 			model: "mistral-tiny",
 			messages: [...data],
+			temperature: 0.7,
+			max_tokens: 16,
+			top_p: 0.95,
 		})
 		.then((response) => {
+			log("response", response);
 			res.status(200).json({ message: response.choices[0].message.content });
 		})
 		.catch((error) => {
