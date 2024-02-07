@@ -7,8 +7,8 @@ sudo docker-compose stop
 
 echo "----------------------------Pulling latest changes from git1---------------------------"
 
-sudo git pull
+git pull
 
 echo "----------------------------Building and starting the app---------------------------"
 
-sudo docker-compose -f compose.prod.yaml up
+sudo docker-compose -f compose.prod.yaml up -d
