@@ -22,20 +22,18 @@ const apiKey = process.env.MISTRAL_API_KEY || "your_api_key";
 
 const client = new MistralClient(apiKey);
 
-
 app.get("/", async (req, res) => {
-	console.log('checking get')
-			res.status(200).json("workin'");
+	console.log("checking get");
+	res.status(200).json("workin'");
 });
-
 
 app.post("/api/message", async (req, res) => {
 	console.log(req.body);
 	const messageList = [];
 
 	const messages = req.body.messages;
-  const data = messageList.concat(messages);
-  console.log('data',data);
+	const data = messageList.concat(messages);
+	console.log("data", data);
 	client
 		.chat({
 			model: "mistral-tiny",
@@ -47,23 +45,28 @@ app.post("/api/message", async (req, res) => {
 		.catch((error) => {
 			console.log("------------------------error------------------------", error);
 			res.status(400).json({ message: error });
-  	});
-  // res.status(200).json({ message: 'hello' });
+		});
+	// res.status(200).json({ message: 'hello' });
 });
 
 // Load SSL certificate and private key
-const sslOptions = {
-  key: fs.readFileSync("/etc/letsencrypt/live/chatbot.lopvet-damien.com/privkey.pem"),
-  cert: fs.readFileSync("/etc/letsencrypt/live/chatbot.lopvet-damien.com/fullchain.pem"),
-};
+
+if (process.env.NODE_ENV != "development") {
+	const sslOptions = {
+		key: fs.readFileSync("/etc/letsencrypt/live/chatbot.lopvet-damien.com/privkey.pem"),
+		cert: fs.readFileSync("/etc/letsencrypt/live/chatbot.lopvet-damien.com/fullchain.pem"),
+	};
+	const server = https.createServer(sslOptions, app);
+	server.listen(httpsPort, () => {
+		console.log(`HTTPS Server running on port ${httpsPort}`);
+	});
+} else {
+	
+	// Listen on HTTP 
+	app.listen(port, () => {
+	 console.log(`HTTP Server running on port ${port}`);
+	});
+
+}
 
 
-const server = https.createServer(sslOptions, app);
-// Listen on both HTTP and HTTPS ports
-//server.listen(port, () => {
-  //  console.log(`HTTP Server running on port ${httpsPort}`);
-//});
-
- server.listen(httpsPort, () => {
-     console.log(`HTTPS Server running on port ${httpsPort}`);
- });
