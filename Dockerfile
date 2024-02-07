@@ -7,8 +7,8 @@ COPY package.json .
 RUN npm install
 
 COPY . .
-
-ENTRYPOINT [ "" ]
+ 
+CMD [ "node", "index.js" ]
 
 
 ## repo uri is public.ecr.aws/k2m2m9w6/chatbot-api
