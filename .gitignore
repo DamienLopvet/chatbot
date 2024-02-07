@@ -1,3 +1,6 @@
 /node_modules
 .env 
 chatbot-key.pem
+*.pem
+Dockerfile
+compose.yaml
